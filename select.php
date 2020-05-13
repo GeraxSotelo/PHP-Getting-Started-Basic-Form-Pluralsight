@@ -13,9 +13,10 @@ $result = $db->query($sql);
 
 foreach ($result as $row) {
     printf(
-        '<li>%s (%s)</li>',
+        '<li>%s (%s) <a href="delete.php?id=%s">Delete</a></li>',
         htmlspecialchars($row['name'], ENT_QUOTES),
-        htmlspecialchars($row['gender'], ENT_QUOTES)
+        htmlspecialchars($row['gender'], ENT_QUOTES),
+        htmlspecialchars($row['id'], ENT_QUOTES)
     );
 }
 
