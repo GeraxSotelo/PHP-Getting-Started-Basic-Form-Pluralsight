@@ -2,6 +2,7 @@
     require 'config.inc.php';
 
     $name = '';
+    $password = '';
     $gender = '';
     $color = '';
 
@@ -21,6 +22,9 @@
         }
 
         if ($ok) {
+            //1st argument is the password. 2nd argument is the algorithm
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+
             $db = new mysqli(
                 MYSQL_HOST,
                 MYSQL_USER,
@@ -28,10 +32,11 @@
                 MYSQL_DATABASE
             );
             $sql = sprintf(
-                "INSERT INTO users (name, gender, color) VALUES ('%s', '%s', '%s')",
+                "INSERT INTO users (name, gender, color) VALUES ('%s', '%s', '%s', '%s')",
                 $db->real_escape_string($name),
                 $db->real_escape_string($gender),
-                $db->real_escape_string($color)
+                $db->real_escape_string($color),
+                $db->real_escape_string($hash)
             );
             $db->query($sql);
             echo '<p>User added.</p>';
@@ -42,6 +47,7 @@
 
 <form action="" method="post">
     User Name: <input type="text" name="name" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>"><br>
+    Password: <input type="password" name="password" id="password"><br>
     Gender:
         <input type="radio" name="gender" value="f"<?php if($gender === 'f'){echo ' checked';} ?>> Female
         <input type="radio" name="gender" value="m"<?php if($gender === 'm'){echo ' checked';} ?>> Male
