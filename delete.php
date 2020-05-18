@@ -1,4 +1,6 @@
 <?php
+require 'config.inc.php';
+require 'auth.inc.php';
 
 if(isset($_GET['id']) && ctype_digit($_GET['id'])) {
     $id = $_GET['id'];
@@ -8,10 +10,10 @@ if(isset($_GET['id']) && ctype_digit($_GET['id'])) {
 }
 
 $db = new mysqli(
-    'localhost',
-    'testuser',
-    'password',
-    'php'
+    MYSQL_HOST,
+    MYSQL_USER,
+    MYSQL_PASSWORD,
+    MYSQL_DATABASE
 );
 
 //Within double quotes, PHP replaces variables with their values.
